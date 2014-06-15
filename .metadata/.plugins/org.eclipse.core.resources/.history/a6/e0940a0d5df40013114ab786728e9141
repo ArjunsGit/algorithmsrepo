@@ -1,0 +1,81 @@
+/**
+ * 
+ */
+package com.linkedlist.src;
+
+import java.util.Iterator;
+import java.util.ListIterator;
+
+/**
+ * @author arjunflex
+ * 
+ */
+public class LinkedList<Item> implements Iterable<Item> {
+
+	private Node first_element;
+	private Node last_element;
+	private int length;
+
+	@Override
+	public Iterator iterator() {
+		return new LinkedListIterator();
+	}
+
+	public void add(Item item) {
+		Node node = new Node();
+		node.item = item;
+		node.next = null;
+
+		/*
+		 * Check for the first element 
+		 * It's the first element 
+		 */
+
+		if (length == 0 
+				&& first_element == null 
+				&& last_element == null) {
+			first_element = node;
+			last_element = node;
+		} else {
+			last_element.next = node;
+			last_element = node;
+		}
+	}
+	
+	
+	
+	private class LinkedListIterator<Item> implements Iterator<Item> {
+		
+		private Node current_element = first_element;
+		
+		public void reset() {
+			current_element = first_element;
+		}
+
+		@Override
+		public boolean hasNext() {
+			if(current_element != null) {
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		public Item next() {
+			Item item = null;
+			if(current_element != null) {
+				item = (Item) current_element.item;
+				current_element = current_element.next;
+			}
+			
+			return item;
+		}
+
+		@Override
+		public void remove() {
+			
+		}
+		
+	}
+
+}
